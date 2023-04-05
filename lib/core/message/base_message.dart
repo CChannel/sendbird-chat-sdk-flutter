@@ -412,6 +412,18 @@ class BaseMessage {
     if (json['msg_id'] != null) json['message_id'] = json['msg_id'];
     if (json['req_id'] != null) json['request_id'] = json['req_id'];
 
+    // set width and height in OGMetaData
+    if (json['og_tag'] != null && json['og_tag']['og:image'] != null) {
+      if (json['og_tag']['og:image']['width'] == null ||
+          json['og_tag']['og:image']['width'] == 'undefined') {
+        json['og_tag']['og:image']['width'] = 0;
+      }
+      if (json['og_tag']['og:image']['height'] == null ||
+          json['og_tag']['og:image']['height'] == 'undefined') {
+        json['og_tag']['og:image']['height'] = 0;
+      }
+    }
+
     //manually insert type if channel is provided
     if (channelType != null) json['channel_type'] = channelType.asString();
     //manually insert reply_to_channel
